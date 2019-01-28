@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -16,7 +17,16 @@ public class MainMenu : MonoBehaviour
             GameObject container = Instantiate(levelButtonPrefabs) as GameObject;
             container.GetComponent<Image>().sprite = thumbnail;
             container.transform.SetParent(levelButtonContaner.transform, false);
+
+            string sceneName = thumbnail.name;
+            container.GetComponent<Button>().onClick.AddListener(()=>LoadLevel(sceneName));
         }
+    }
+
+    private void LoadLevel(string sceneName)
+    {
+        Debug.Log(sceneName);
+       // SceneManager.LoadScene(sceneName);
     }
 
 }
