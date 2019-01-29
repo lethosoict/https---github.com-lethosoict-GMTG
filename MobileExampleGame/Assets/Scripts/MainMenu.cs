@@ -6,8 +6,10 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameObject levelButtonPrefabs;
+    public GameObject levelButtonPrefab;
     public GameObject levelButtonContaner;
+    public GameObject shopButtonPrefab;
+    public GameObject shopButtonContainer;
 
     private Transform cameraTransform;
     private Transform cameraDesiredLookAt;
@@ -21,12 +23,22 @@ public class MainMenu : MonoBehaviour
         Sprite[] thumbnails = Resources.LoadAll<Sprite>("Levels");
         foreach(Sprite thumbnail in thumbnails)
         {
-            GameObject container = Instantiate(levelButtonPrefabs) as GameObject;
+            GameObject container = Instantiate(levelButtonPrefab) as GameObject;
             container.GetComponent<Image>().sprite = thumbnail;
             container.transform.SetParent(levelButtonContaner.transform, false);
 
             string sceneName = thumbnail.name;
             container.GetComponent<Button>().onClick.AddListener(()=>LoadLevel(sceneName));
+        }
+
+        Sprite[] textures = Resources.LoadAll<Sprite>("Player");
+        foreach(Sprite texture in textures)
+        {
+            GameObject container = Instantiate(shopButtonPrefab) as GameObject;
+            container.GetComponent<Image>().sprite = texture;
+            container.transform.SetParent(shopButtonContainer.transform, false);
+
+
         }
     }
 
