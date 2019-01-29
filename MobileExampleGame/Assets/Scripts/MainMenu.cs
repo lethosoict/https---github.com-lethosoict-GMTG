@@ -87,6 +87,9 @@ public class MainMenu : MonoBehaviour
 
         playerMaterial.SetTextureOffset("_MainTex", new Vector2(x,y));
         Debug.Log(index);
+        GameManager.Instance.currentSkinIndex = index;
+        GameManager.Instance.Save();
+
     }
 
 }

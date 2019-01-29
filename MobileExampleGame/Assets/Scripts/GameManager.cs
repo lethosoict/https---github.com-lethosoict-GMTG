@@ -25,9 +25,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("CurrentSkin", currentSkinIndex);
-            PlayerPrefs.SetInt("Currency", currency);
-            PlayerPrefs.SetInt("SkinAvailability", skinAvailability);
+            Save();
         }
     }
 
@@ -35,5 +33,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("CurrentSkin", currentSkinIndex);
+        PlayerPrefs.SetInt("Currency", currency);
+        PlayerPrefs.SetInt("SkinAvailability", skinAvailability);
     }
 }
