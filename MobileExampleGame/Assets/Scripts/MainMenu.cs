@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         cameraTransform = Camera.main.transform;
-        ChangePlayerSkin(4);
+       // ChangePlayerSkin(0);
 
 
         Sprite[] thumbnails = Resources.LoadAll<Sprite>("Levels");
@@ -36,14 +36,16 @@ public class MainMenu : MonoBehaviour
             container.GetComponent<Button>().onClick.AddListener(()=>LoadLevel(sceneName));
         }
 
+        int textureIndex = 0;
         Sprite[] textures = Resources.LoadAll<Sprite>("Player");
         foreach(Sprite texture in textures)
         {
             GameObject container = Instantiate(shopButtonPrefab) as GameObject;
             container.GetComponent<Image>().sprite = texture;
             container.transform.SetParent(shopButtonContainer.transform, false);
-
-
+            int index = textureIndex;
+            container.GetComponent<Button>().onClick.AddListener(() => ChangePlayerSkin(index));
+            textureIndex++;
         }
     }
 
@@ -84,6 +86,7 @@ public class MainMenu : MonoBehaviour
 
 
         playerMaterial.SetTextureOffset("_MainTex", new Vector2(x,y));
+        Debug.Log(index);
     }
 
 }
