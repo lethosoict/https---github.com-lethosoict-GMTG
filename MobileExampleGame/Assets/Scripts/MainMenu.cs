@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject levelButtonContaner;
     public GameObject shopButtonPrefab;
     public GameObject shopButtonContainer;
+    public Text currencyText;
 
     public Material playerMaterial;
 
@@ -21,6 +22,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        ChangePlayerSkin(GameManager.Instance.currentSkinIndex);
+        currencyText.text = "Currency :" + GameManager.Instance.currency.ToString();
         cameraTransform = Camera.main.transform;
        // ChangePlayerSkin(0);
 
@@ -72,24 +75,40 @@ public class MainMenu : MonoBehaviour
 
     private void ChangePlayerSkin(int index)
     {
-        float x = (index % 4) * 0.25f;
-        float y = ((int)index/ 4) * 0.25f;
+        if((GameManager.Instance.skinAvailability & 1 << index) == 1 << index)
+        {
+            //Debug.Log(1 << index);
+            float x = (index % 4) * 0.25f;
+            float y = ((int)index / 4) * 0.25f;
 
-        if (y == 0.0f)
-            y = 0.75f;
-        else if (y == 0.25f)
-            y = 0.5f;
-        else if (y == 0.5f)
-            y = 0.25f;
-        else if (y == 0.75f)
-            y = 0f;
+            if (y == 0.0f)
+                y = 0.75f;
+            else if (y == 0.25f)
+                y = 0.5f;
+            else if (y == 0.5f)
+                y = 0.25f;
+            else if (y == 0.75f)
+                y = 0f;
 
 
-        playerMaterial.SetTextureOffset("_MainTex", new Vector2(x,y));
-        Debug.Log(index);
-        GameManager.Instance.currentSkinIndex = index;
-        GameManager.Instance.Save();
+            playerMaterial.SetTextureOffset("_MainTex", new Vector2(x, y));
+            Debug.Log(index);
+            GameManager.Instance.currentSkinIndex = index;
+            GameManager.Instance.Save();
+        }
+        else
+        {
+            // You do not have skin, do you want to buy it
+            float cost = 0;
+
+            if(GameManager.Instance.currency >= cost)
+            {
+                GameManager.Instance.currency -= cost;
+            }
+        }
+
+        
 
     }
-
+    
 }
