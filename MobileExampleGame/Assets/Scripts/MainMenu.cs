@@ -109,6 +109,12 @@ public class MainMenu : MonoBehaviour
             if(GameManager.Instance.currency >= cost)
             {
                 GameManager.Instance.currency -= cost;
+                GameManager.Instance.skinAvailability += 1<<index;
+                GameManager.Instance.Save();
+                currencyText.text = "Currency : " + GameManager.Instance.currency.ToString();
+                shopButtonContainer.transform.GetChild(index).GetChild(0).gameObject.SetActive(false);
+                ChangePlayerSkin(index);
+                Debug.Log("No Skin " + index);
             }
         }
 
