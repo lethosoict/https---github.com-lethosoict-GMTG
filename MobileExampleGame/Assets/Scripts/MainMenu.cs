@@ -68,8 +68,8 @@ public class MainMenu : MonoBehaviour
 
     private void LoadLevel(string sceneName)
     {
-        Debug.Log(sceneName);
-       // SceneManager.LoadScene(sceneName);
+        // Debug.Log(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void LookAt(Transform menuTransform)
