@@ -9,12 +9,15 @@ public class Motor : MonoBehaviour
     public float terminalRotationSpeed = 25.0f;
 
     private Rigidbody controller;
+    private Transform camTransform;
 
     private void Start()
     {
         controller = GetComponent<Rigidbody>();
         controller.maxAngularVelocity = terminalRotationSpeed;
         controller.drag = drag;
+
+        camTransform = Camera.main.transform;
     }
 
     private void Update()
@@ -26,6 +29,11 @@ public class Motor : MonoBehaviour
 
         if (dir.magnitude > 1)
             dir.Normalize();
+
+        //Rotation our direction vector with camera
+        Vector3 rotateDir = camTransform.TransformDirection(dir);
+        rotateDir = new Vector3(rotateDir.x, 0, rotateDir.z);
+        rotateDir = rotateDir.normalized * dir.magnitude;
 
         controller.AddForce(dir * moveSpeed);
     }
