@@ -48,6 +48,11 @@ public class MainMenu : MonoBehaviour
             container.transform.SetParent(shopButtonContainer.transform, false);
             int index = textureIndex;
             container.GetComponent<Button>().onClick.AddListener(() => ChangePlayerSkin(index));
+            if((GameManager.Instance.skinAvailability & 1 << index) == 1 << index)
+            {
+                container.transform.GetChild(0).gameObject.SetActive(false);
+            }
+            
             textureIndex++;
         }
     }
@@ -63,8 +68,8 @@ public class MainMenu : MonoBehaviour
 
     private void LoadLevel(string sceneName)
     {
-        Debug.Log(sceneName);
-       // SceneManager.LoadScene(sceneName);
+        // Debug.Log(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void LookAt(Transform menuTransform)
@@ -99,11 +104,17 @@ public class MainMenu : MonoBehaviour
         else
         {
             // You do not have skin, do you want to buy it
-            float cost = 0;
+            int cost = 0;
 
             if(GameManager.Instance.currency >= cost)
             {
                 GameManager.Instance.currency -= cost;
+                GameManager.Instance.skinAvailability += 1<<index;
+                GameManager.Instance.Save();
+                currencyText.text = "Currency : " + GameManager.Instance.currency.ToString();
+                shopButtonContainer.transform.GetChild(index).GetChild(0).gameObject.SetActive(false);
+                ChangePlayerSkin(index);
+                Debug.Log("No Skin " + index);
             }
         }
 
