@@ -34,9 +34,17 @@ public class MainMenu : MonoBehaviour
 
     public Material playerMaterial;
 
+    private const float CAMERA_TRANSITION_SPEED = 3.0f;
     private Transform cameraTransform;
     private Transform cameraDesiredLookAt;
-    private const float CAMERA_TRANSITION_SPEED = 3.0f;
+
+    private bool nextLevelLockek = false;
+
+    private int[] costs = { 0,   120, 150, 150,
+                            200, 250, 300, 300,
+                            350, 400, 450, 500,
+                            1000, 1200, 1500, 2000};
+    
 
 
 
@@ -56,6 +64,11 @@ public class MainMenu : MonoBehaviour
             container.transform.SetParent(levelButtonContaner.transform, false);
             LevelData level = new LevelData(thumbnail.name);
             container.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = (level.BestTime != 0.0f) ? level.BestTime.ToString("f") : "";
+
+            if(level.BestTime == 0.0f)
+            {
+                nextLevelLockek = true;
+            }
 
             string sceneName = thumbnail.name;
             container.GetComponent<Button>().onClick.AddListener(()=>LoadLevel(sceneName));
@@ -144,9 +157,6 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private int[] costs = { 0,   120, 150, 150,
-                            200, 250, 300, 300,
-                            350, 400, 450, 500,
-                            1000, 1200, 1500, 2000};
+    
     
 }
