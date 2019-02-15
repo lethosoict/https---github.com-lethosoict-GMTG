@@ -58,5 +58,7 @@ public class LevelManager : MonoBehaviour
         saveString += goldTime.ToString();
         PlayerPrefs.SetString(SceneManager.GetActiveScene().name, saveString);
         Debug.Log(SceneManager.GetActiveScene().name);
+
+        SceneManager.LoadScene("MainMenu");
     }
 }
