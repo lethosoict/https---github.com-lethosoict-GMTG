@@ -9,7 +9,12 @@ public class LevelData
     public LevelData(string levelName)
     {
         string data = PlayerPrefs.GetString(levelName);
-        Debug.Log(data);
+        if (data == "")
+            return;
+        string[] allData = data.Split('&');
+        BestTime = float.Parse(allData[0]);
+        SilverTime = float.Parse(allData[1]);
+        GoldTime = float.Parse(allData[2]);
     }
 
 
@@ -49,8 +54,8 @@ public class MainMenu : MonoBehaviour
             GameObject container = Instantiate(levelButtonPrefab) as GameObject;
             container.GetComponent<Image>().sprite = thumbnail;
             container.transform.SetParent(levelButtonContaner.transform, false);
-                new LevelData(thumbnail.name);
-            container.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "EMPTY";
+            LevelData level = new LevelData(thumbnail.name);
+            container.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = (level.BestTime != 0.0f) ? level.BestTime.ToString("f") : "";
 
             string sceneName = thumbnail.name;
             container.GetComponent<Button>().onClick.AddListener(()=>LoadLevel(sceneName));

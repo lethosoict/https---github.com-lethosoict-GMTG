@@ -51,7 +51,8 @@ public class LevelManager : MonoBehaviour
         GameManager.Instance.Save();
 
         string saveString = "";
-        saveString += duration.ToString();
+        LevelData level = new LevelData(SceneManager.GetActiveScene().name);
+        saveString += (level.BestTime > duration || level.BestTime == 0.0f) ? duration.ToString() : level.BestTime.ToString();
         saveString += '&';
         saveString += silverTime.ToString();
         saveString += '&';
