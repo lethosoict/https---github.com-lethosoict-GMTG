@@ -4,6 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+public class LevelData
+{
+    public LevelData(string levelName)
+    {
+        string data = PlayerPrefs.GetString(levelName);
+        Debug.Log(data);
+    }
+
+
+    public float BestTime { get; set; }
+    public float GoldTime { get; set; }
+    public float SilverTime { get; set; }
+}
+
+
 public class MainMenu : MonoBehaviour
 {
     public GameObject levelButtonPrefab;
@@ -34,6 +49,8 @@ public class MainMenu : MonoBehaviour
             GameObject container = Instantiate(levelButtonPrefab) as GameObject;
             container.GetComponent<Image>().sprite = thumbnail;
             container.transform.SetParent(levelButtonContaner.transform, false);
+                new LevelData(thumbnail.name);
+            container.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "EMPTY";
 
             string sceneName = thumbnail.name;
             container.GetComponent<Button>().onClick.AddListener(()=>LoadLevel(sceneName));
@@ -48,6 +65,7 @@ public class MainMenu : MonoBehaviour
             container.transform.SetParent(shopButtonContainer.transform, false);
             int index = textureIndex;
             container.GetComponent<Button>().onClick.AddListener(() => ChangePlayerSkin(index));
+            container.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = costs[index].ToString();
             if((GameManager.Instance.skinAvailability & 1 << index) == 1 << index)
             {
                 container.transform.GetChild(0).gameObject.SetActive(false);
@@ -97,14 +115,16 @@ public class MainMenu : MonoBehaviour
 
 
             playerMaterial.SetTextureOffset("_MainTex", new Vector2(x, y));
-            Debug.Log(index);
+          //  Debug.Log(index);
             GameManager.Instance.currentSkinIndex = index;
             GameManager.Instance.Save();
         }
         else
         {
             // You do not have skin, do you want to buy it
-            int cost = 0;
+            int cost = costs[index];
+            Debug.Log(cost);
+
 
             if(GameManager.Instance.currency >= cost)
             {
@@ -114,12 +134,14 @@ public class MainMenu : MonoBehaviour
                 currencyText.text = "Currency : " + GameManager.Instance.currency.ToString();
                 shopButtonContainer.transform.GetChild(index).GetChild(0).gameObject.SetActive(false);
                 ChangePlayerSkin(index);
-                Debug.Log("No Skin " + index);
+            //    Debug.Log("No Skin " + index);
             }
         }
-
-        
-
     }
+
+    private int[] costs = { 0,   120, 150, 150,
+                            200, 250, 300, 300,
+                            350, 400, 450, 500,
+                            1000, 1200, 1500, 2000};
     
 }
