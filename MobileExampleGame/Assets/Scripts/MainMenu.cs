@@ -38,7 +38,7 @@ public class MainMenu : MonoBehaviour
     private Transform cameraTransform;
     private Transform cameraDesiredLookAt;
 
-    private bool nextLevelLockek = false;
+    private bool nextLevelLocked = false;
 
     private int[] costs = { 0,   120, 150, 150,
                             200, 250, 300, 300,
@@ -64,10 +64,12 @@ public class MainMenu : MonoBehaviour
             container.transform.SetParent(levelButtonContaner.transform, false);
             LevelData level = new LevelData(thumbnail.name);
             container.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = (level.BestTime != 0.0f) ? level.BestTime.ToString("f") : "";
+            container.transform.GetChild(1).GetComponent<Image>().enabled = nextLevelLocked;
+            container.GetComponent<Button>().interactable = !nextLevelLocked;
 
             if(level.BestTime == 0.0f)
             {
-                nextLevelLockek = true;
+                nextLevelLocked = true;
             }
 
             string sceneName = thumbnail.name;
