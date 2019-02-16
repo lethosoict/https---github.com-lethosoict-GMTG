@@ -11,7 +11,7 @@ public class DestroyableObject : MonoBehaviour
         if (col.impulse.magnitude > forceRequireed)
             Destroy(gameObject);
         else
-            Debug.Log("Not enough force to destroy wall" + col.impulse.magnitude);
+            Debug.Log("Not enough force to destroy wall " + col.impulse.magnitude);
 
 
     }
