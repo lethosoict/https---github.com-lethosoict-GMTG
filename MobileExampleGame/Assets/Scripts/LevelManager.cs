@@ -10,6 +10,8 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get { return instance;} }
 
     public GameObject pauseMenu;
+    public Transform reSpawnPoint;
+    private GameObject player;
 
     private float startTime;
     public float silverTime;
@@ -20,6 +22,14 @@ public class LevelManager : MonoBehaviour
         instance = this;
         pauseMenu.SetActive(false);
         startTime = Time.time;
+        player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.position = reSpawnPoint.position;
+    }
+
+    private void Update()
+    {
+        if (player.transform.position.y < -10f)
+            Death();
     }
 
     public void TogglePauseMenu()
@@ -61,5 +71,13 @@ public class LevelManager : MonoBehaviour
         Debug.Log(SceneManager.GetActiveScene().name);
 
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Death()
+    {
+        player.transform.position = reSpawnPoint.position;
+        Rigidbody rigid = player.GetComponent<Rigidbody>();
+        rigid.velocity = Vector3.zero;
+        rigid.angularVelocity = Vector3.zero;
     }
 }
