@@ -59,4 +59,9 @@ public class Motor : MonoBehaviour
         }
             
     }
+
+    public void Jump()
+    {
+        controller.AddForce(Vector3.up*200f);
+    }
 }
