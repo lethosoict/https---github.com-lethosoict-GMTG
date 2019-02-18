@@ -7,7 +7,7 @@ public class FreeCamera : MonoBehaviour
     public VirtualJoystick cameraJoystick;
     public Transform lookAt;
 
-    private float distance = 5.0f;
+    private float distance = 10.0f;
     private float currentX = 3.0f;
     private float currentY = 10.0f;
     private float sensitivityX = 3.0f;

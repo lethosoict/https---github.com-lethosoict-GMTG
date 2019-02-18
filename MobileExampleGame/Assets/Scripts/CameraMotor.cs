@@ -13,7 +13,7 @@ public class CameraMotor : MonoBehaviour
     private float swipeResistance = 200.0f;
 
     private float smoothSpeed = 7.5f;
-    private float distance = 5.0f;
+    private float distance = 10.0f;
     private float yOffset = 3.5f;
 
     private void Start()
